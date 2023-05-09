@@ -1,0 +1,83 @@
+<html>
+
+<head>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+
+<body style="margin: 25px;">
+    <div id="app">
+        <table class="default">
+            <tbody>
+                <tr>
+                    <td style="width: 50%; text-align:center; align-items: center;">
+                        <h3>All contacts</h3>
+                        <select v-model="selected" multiple style="width: 75%; height: 100px;">
+                            <option v-for="option in options" v-bind:value="option">
+                                {{ option.name }}
+                            </option>
+                        </select>
+                        <p>{{ message }}</p>
+                        <button v-on:click="add">
+                            Add
+                        </button>
+                    </td>
+                    <td style="width: 50%; border-left-style: solid; border-color: black;">
+                        <div v-for="(value, index) in selected" :key="index"
+                            style="text-align: center; margin-left: 80px;">
+                            <label for="name">Name: </label>
+                            <input v-model="value.name" style="margin:5px;">
+                            <label for="work">Work: </label>
+                            <input v-model="value.work" style="margin:5px;">
+                            <br>
+                            <label for="mobile">Mobile: </label>
+                            <input v-model="value.mobile" style="margin:5px;">
+                            <label for="email">Email: </label>
+                            <input v-model="value.email" style="margin:5px;">
+                            <br>
+                            <label for="address">Address: </label>
+                            <textarea v-model="value.address" rows="3" style="margin:5px; width: 50%;"></textarea>
+                            <div style="margin-top: 15px;">
+                                <button v-on:click="d(value)">
+                                    Delete
+                                </button>
+                                <button v-on:click="save" style="margin-left: 10px;">
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        const { createApp } = Vue
+        createApp({
+            data() {
+                return {
+                    selected: [{}],
+                    options: [
+                        { name: 'Gonzalo Gonzalez', work: 'artist', mobile: '65823491', email: 'gonzalo@email.com', address: '495 Grove Street, apartment#20, New York' },
+                        { name: 'Mario Maroto', work: 'chef', mobile: '75412864', email: 'mario@email.com', address: '475 Leanfant, apartment#5, Washington DC' },
+                        { name: 'Rodrigo Rodriguez', work: 'doctor', mobile: '83154792', email: 'rodrigo@email.com', address: '101 W Main, apartment#23, Washington DC' },
+                        { name: 'Zara Soto', work: 'teacher', mobile: '53149501', email: 'zara@email.com', address: '351 Grove Street, apartment#12, New York' }
+                    ]
+                }
+            },
+            methods: {
+                add: function () {
+                    this.selected = [{}];
+                },
+                d: function (elemento) {
+                    posicion = this.options.indexOf(elemento);
+                    this.options.splice((posicion), 1);
+                },
+                save: function () {
+                    this.options = this.options.concat(this.selected);
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+
+</html>
